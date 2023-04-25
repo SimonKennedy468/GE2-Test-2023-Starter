@@ -5,7 +5,7 @@ using System.Text;
 
 public class FPSController : MonoBehaviour
 {
-    public GameObject mainCamera;
+    public GameObject currentControl;
     public float speed = 50.0f;
     public float lookSpeed = 150.0f;
 
@@ -16,9 +16,9 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
-        if (mainCamera == null)
+        if (currentControl == null)
         {
-            mainCamera = Camera.main.gameObject;
+            currentControl = this.gameObject;
         }
     }
 
@@ -51,7 +51,7 @@ public class FPSController : MonoBehaviour
 
     void Walk(float units)
     {
-        Vector3 forward = mainCamera.transform.forward;
+        Vector3 forward = currentControl.transform.forward;
         //forward.y = 0;
         forward.Normalize();
         transform.position += forward * units;
@@ -64,7 +64,7 @@ public class FPSController : MonoBehaviour
 
     void Strafe(float units)
     {
-        transform.position += mainCamera.transform.right * units;
+        transform.position += currentControl.transform.right * units;
             
     }
 

@@ -29,8 +29,10 @@ public class testCollide : MonoBehaviour
         if (Input.GetKey(KeyCode.Z))
         {
             isCollided = false;
-            //rb.isKinematic = true;
-            //rb.detectCollisions = false;
+
+            camera.AddComponent<FPSController>();
+            Destroy(head.GetComponent<FPSController>());
+
         }
     }
 
@@ -38,8 +40,14 @@ public class testCollide : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("entered");
-        target = other.gameObject; 
-        //this.transform.position = other.transform.position;
-        isCollided = true;
+        if(other.gameObject.tag == "boidTargetCollider")
+        {
+            target = other.gameObject;
+            //this.transform.position = other.transform.position;
+            head.AddComponent<FPSController>();
+            isCollided = true;
+            Destroy(camera.GetComponent<FPSController>());
+        }
+        
     }
 }
