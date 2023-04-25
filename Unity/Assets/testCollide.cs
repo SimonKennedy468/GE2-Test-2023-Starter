@@ -8,6 +8,8 @@ public class testCollide : MonoBehaviour
     public GameObject target;
     public GameObject head;
     public Vector3 dir;
+
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +25,16 @@ public class testCollide : MonoBehaviour
             dir = target.transform.position - camera.transform.position;
             camera.transform.Translate(dir);
         }
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+            isCollided = false;
+            //rb.isKinematic = true;
+            //rb.detectCollisions = false;
+        }
     }
 
-
+    
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("entered");
