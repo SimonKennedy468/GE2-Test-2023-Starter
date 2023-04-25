@@ -32,7 +32,7 @@ public class testCollide : MonoBehaviour
         if (Input.GetKey(KeyCode.Z))
         {
             isCollided = false;
-
+            //in update method, so being activated while z is held, not pressed, meaning user cant controll boid after leaving
             camera.AddComponent<FPSController>();
             camera.transform.parent = null;
 
@@ -46,15 +46,19 @@ public class testCollide : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("entered");
         if(other.gameObject.tag == "boidTargetCollider")
         {
+            Debug.Log("controlling boid");
             camera.transform.position = other.transform.position;
             target = other.gameObject;
             //this.transform.position = other.transform.position;
             head.AddComponent<boidController>();
             isCollided = true;
+
+            
+            
             Destroy(camera.GetComponent<FPSController>());
+
         }
         
     }
