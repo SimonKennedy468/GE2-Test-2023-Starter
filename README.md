@@ -4,7 +4,7 @@
 
 In today's test you will be programming a system that allows a player to take control of a creature whenever the player enters a Pod attached to the creature. Below is a video of what the final system should look like:
 
-[![Video](http://img.youtube.com/vi/2yy03ItDzlo/0.jpg)](http://www.youtube.com/watch?2yy03ItDzlo)
+[![Video](http://img.youtube.com/vi/2yy03ItDzlo/0.jpg)](http://www.youtube.com/watch?v=2yy03ItDzlo)
 
 Some things to note: 
 
