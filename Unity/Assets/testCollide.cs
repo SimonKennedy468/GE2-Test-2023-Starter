@@ -22,8 +22,8 @@ public class testCollide : MonoBehaviour
         if(isCollided == true)
         {
             camera.transform.LookAt(head.transform);
-            dir = target.transform.position - camera.transform.position;
-            camera.transform.Translate(dir);
+            //dir = target.transform.position - camera.transform.position;
+            camera.transform.parent = head.transform;
         }
 
         if (Input.GetKey(KeyCode.Z))
@@ -31,7 +31,7 @@ public class testCollide : MonoBehaviour
             isCollided = false;
 
             camera.AddComponent<FPSController>();
-            Destroy(head.GetComponent<FPSController>());
+            Destroy(head.GetComponent<boidController>());
 
         }
     }
@@ -44,9 +44,13 @@ public class testCollide : MonoBehaviour
         {
             target = other.gameObject;
             //this.transform.position = other.transform.position;
-            head.AddComponent<FPSController>();
+            head.AddComponent<boidController>();
             isCollided = true;
             Destroy(camera.GetComponent<FPSController>());
+            Destroy(head.GetComponent<ObstacleAvoidance>());
+            Destroy(head.GetComponent<Seek>());
+            //Destroy(head.GetComponent<SpineAnimator>());
+            Destroy(head.GetComponent<NoiseWander>());
         }
         
     }
