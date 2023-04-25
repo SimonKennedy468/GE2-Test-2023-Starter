@@ -65,7 +65,9 @@ public class boidController : MonoBehaviour
     void Strafe(float units)
     {
         transform.position += currentControl.transform.right * units;
-        transform.Rotate(units, 0, 0, Space.World);
+
+        
+        transform.Rotate(0, (units * 90) / 5, 0, Space.World);
 
     }
 

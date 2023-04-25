@@ -4,6 +4,8 @@ using UnityEngine;
 public class testCollide : MonoBehaviour
 {
     public GameObject camera;
+    public GameObject lookTarget;
+    public Vector3 lookPoint;
     public bool isCollided = false;
     public GameObject target;
     public GameObject head;
@@ -21,8 +23,9 @@ public class testCollide : MonoBehaviour
     {
         if(isCollided == true)
         {
-            camera.transform.LookAt(head.transform);
-            //dir = target.transform.position - camera.transform.position;
+            //lookPoint = head.transform.position - lookTarget.transform.position;
+            camera.transform.LookAt(lookTarget.transform);
+            
             camera.transform.parent = head.transform;
         }
 
@@ -31,7 +34,11 @@ public class testCollide : MonoBehaviour
             isCollided = false;
 
             camera.AddComponent<FPSController>();
+            camera.transform.parent = null;
+
+
             Destroy(head.GetComponent<boidController>());
+
 
         }
     }
@@ -42,15 +49,12 @@ public class testCollide : MonoBehaviour
         Debug.Log("entered");
         if(other.gameObject.tag == "boidTargetCollider")
         {
+            camera.transform.position = other.transform.position;
             target = other.gameObject;
             //this.transform.position = other.transform.position;
             head.AddComponent<boidController>();
             isCollided = true;
             Destroy(camera.GetComponent<FPSController>());
-            Destroy(head.GetComponent<ObstacleAvoidance>());
-            Destroy(head.GetComponent<Seek>());
-            //Destroy(head.GetComponent<SpineAnimator>());
-            Destroy(head.GetComponent<NoiseWander>());
         }
         
     }

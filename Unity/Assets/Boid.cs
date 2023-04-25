@@ -11,6 +11,8 @@ public class Boid : MonoBehaviour
     public Vector3 velocity = Vector3.zero;
     public float mass = 1;
 
+    public GameObject player;
+
     [Range(0.0f, 10.0f)]
     public float damping = 0.01f;
 
@@ -77,20 +79,23 @@ public class Boid : MonoBehaviour
         // 2. Behaviours are prioritised
         // 3. Truncated
         // 4. Running sum
-
-        foreach(SteeringBehaviour b in behaviours)
+        if(player.GetComponent<testCollide>().isCollided == false)
         {
-            if (b.isActiveAndEnabled)
+            foreach (SteeringBehaviour b in behaviours)
             {
-                force += b.Calculate() * b.weight;
-                float f = force.magnitude;
-                if (f > maxForce)
+                if (b.isActiveAndEnabled)
                 {
-                    force = Vector3.ClampMagnitude(force, maxForce);
-                    break;
+                    force += b.Calculate() * b.weight;
+                    float f = force.magnitude;
+                    if (f > maxForce)
+                    {
+                        force = Vector3.ClampMagnitude(force, maxForce);
+                        break;
+                    }
                 }
             }
         }
+        
 
         
 
@@ -101,19 +106,23 @@ public class Boid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        force = Calculate();
-        acceleration = force / mass;
-        velocity += acceleration * Time.deltaTime;
-
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-        
-        if (velocity.magnitude > 0)
+        if(player.GetComponent<testCollide>().isCollided == false)
         {
-            Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking), Time.deltaTime * 3.0f);
-            transform.LookAt(transform.position + velocity, tempUp);
+            force = Calculate();
+            acceleration = force / mass;
+            velocity += acceleration * Time.deltaTime;
 
-            transform.position += velocity * Time.deltaTime;
-            velocity *= (1.0f - (damping * Time.deltaTime));
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        
+            if (velocity.magnitude > 0)
+            {
+                Vector3 tempUp = Vector3.Lerp(transform.up, Vector3.up + (acceleration * banking), Time.deltaTime * 3.0f);
+                transform.LookAt(transform.position + velocity, tempUp);
+
+                transform.position += velocity * Time.deltaTime;
+                velocity *= (1.0f - (damping * Time.deltaTime));
+            }
         }
+        
     }
 }
